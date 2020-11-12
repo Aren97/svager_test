@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="app-wrap">
     <people-list />
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
   computed: {
     ...mapGetters('people', ['getIsDataLoading'])
   },
-  mounted() {
+  mounted () {
     this.getPeople()
   },
   methods: {
@@ -23,3 +23,20 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  * {
+    box-sizing: content-box;
+  }
+  body, html {
+    padding: 0;
+    margin: 0;
+  }
+
+  .app-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+</style>

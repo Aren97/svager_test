@@ -1,4 +1,5 @@
-import swapi from 'swapi-node'
+// import swapi from 'swapi-node'
+
 export default {
   name: 'people',
   namespaced: true,
@@ -11,7 +12,6 @@ export default {
   },
   mutations: {
     setData (state, { results: people , count, next, previous }) {
-      console.log('state', state)
       state.people = people
       state.count = count
       state.next = next
@@ -25,7 +25,10 @@ export default {
     async getPeople ({ commit }) {
       try {
         commit('setIsDataLoading', true)
-        const peopleData = await swapi.get('https://swapi.dev/api/people')
+        const response = await fetch('https://swapi.dev/api/people')
+        const peopleData = await response.json()
+
+        console.log('peopleData', peopleData)
 
         commit('setData', peopleData)
       } catch (e) {
