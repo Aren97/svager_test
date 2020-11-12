@@ -8,6 +8,16 @@
   margin-bottom: 10px;
   padding-bottom: 8px;
   border-bottom: 1px solid #878787;
+
+  &-button {
+    border: none;
+    outline: none;
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 0 15px;
+    cursor: pointer;
+  }
 }
 .people-list__filter-gender {
   margin-right: 10px;
@@ -17,6 +27,7 @@
   display: flex;
   flex: 1 1 auto;
   padding-left: 10px;
+  margin-right: 10px;
   border-left: 1px solid #878787;
 
   &__label {
@@ -29,13 +40,10 @@
     flex: 1 1 auto;
     margin-right: 15px;
   }
+}
 
-  &__button {
-    border: none;
-    outline: none;
-    background-color: #000000;
-    color: #ffffff;
-    border-radius: 6px;
-    padding: 0 15px;
-  }
+.people-list__filter-reset {
+  display: flex;
+  padding-left: 10px;
+  border-left: 1px solid #878787;
 }

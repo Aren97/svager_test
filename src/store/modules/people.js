@@ -6,6 +6,7 @@ export default {
   state: {
     people: [],
     count: 0,
+    page: 1,
     next: '',
     previous: '',
     isDataLoading: false
@@ -19,13 +20,22 @@ export default {
     },
     setIsDataLoading (state, payload) {
       state.isDataLoading = payload
+    },
+    setCurrentPage (state, payload) {
+      state.page = payload
     }
   },
   actions: {
-    async getPeople ({ commit }, payload) {
+    async getPeople ({ commit, state }, payload) {
       try {
         commit('setIsDataLoading', true)
-        const fetchUrl = `https://swapi.dev/api/people${payload ? '/?search=' + payload : ''}`
+        let getParams = `?page=${state.page}`
+
+        if (payload && payload.search) {
+          getParams += '&search=' + payload.search
+        }
+
+        const fetchUrl = `https://swapi.dev/api/people/${getParams}`
         const response = await fetch(fetchUrl)
         const peopleData = await response.json()
 
@@ -37,10 +47,18 @@ export default {
       } finally {
         commit('setIsDataLoading', false)
       }
+    },
+    toPage ({ commit }, { to }) {
+      console.log('to', to)
+      const page = to.split('=') && to.split('=')[1]
+
+      commit('setCurrentPage', page)
     }
   },
   getters: {
     getPeople: state => state.people,
-    getIsDataLoading: state => state.isDataLoading
+    getIsDataLoading: state => state.isDataLoading,
+    next: state => state.next,
+    previous: state => state.previous
   }
 }

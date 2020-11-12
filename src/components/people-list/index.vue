@@ -39,26 +39,35 @@
           class="people-list__filter-search__input"
         >
         <button
-          class="people-list__filter-search__button"
+          class="people-list__filter-button"
           @click="submitSearch"
         >Поиск</button>
+      </div>
+      <div class="people-list__filter-reset">
+        <button
+          class="people-list__filter-button"
+          @click="resetFilters"
+        >Сброс</button>
       </div>
     </div>
     <Table
       :table-columns="tableColumns"
       :people="filteredPeople"
     />
+    <Pagination />
   </div>
 </template>
 
 <script>
 import Table from '@/components/table'
+import Pagination from '@/components/pagination'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'PeopleList',
   components: {
-    Table
+    Table,
+    Pagination
   },
   data () {
     return {
@@ -105,7 +114,12 @@ export default {
   methods: {
     ...mapActions('people', ['getPeople']),
     submitSearch () {
-      this.getPeople(this.searchNameValue)
+      this.getPeople({ search: this.searchNameValue })
+    },
+    resetFilters () {
+      this.gender = null
+      this.searchNameValue = ''
+      this.getPeople()
     }
   }
 }
