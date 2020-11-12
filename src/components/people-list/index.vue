@@ -1,31 +1,34 @@
 <template>
   <div class="people-list-wrap">
     <div class="people-list__filter">
-      <div class="people-list__filter-male">
-        <input
-          type="radio"
-          id="male"
-          name="male"
-          value="male"
-          v-model="gender"
-        >
-        <label for="male">Male</label>
-        <input
-          type="radio"
-          id="female"
-          name="female"
-          value="female"
-          v-model="gender"
-        >
-        <label for="female">Female</label>
-        <input
-          type="radio"
-          id="na"
-          name="na"
-          value="n/a"
-          v-model="gender"
-        >
-        <label for="na">N/A</label>
+      <div class="people-list__filter-gender">
+        <span>Фильтрация по полу</span>
+        <div class="people-list__filter-gender-inner">
+          <input
+            type="radio"
+            id="male"
+            name="male"
+            value="male"
+            v-model="gender"
+          >
+          <label for="male">Male</label>
+          <input
+            type="radio"
+            id="female"
+            name="female"
+            value="female"
+            v-model="gender"
+          >
+          <label for="female">Female</label>
+          <input
+            type="radio"
+            id="na"
+            name="na"
+            value="n/a"
+            v-model="gender"
+          >
+          <label for="na">N/A</label>
+        </div>
       </div>
     </div>
     <Table
@@ -50,6 +53,11 @@ export default {
         {
           title: 'по имени',
           value: 'name',
+          sort: 'base'
+        },
+        {
+          title: 'по росту',
+          value: 'height',
           sort: 'base'
         },
         {

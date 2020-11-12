@@ -69,10 +69,14 @@ export default {
       if (field) {
         if (this.selectedFilter.type === 'base') {
           list.sort((a, b) => {
-            if (typeof a[field] === 'string' || typeof b[field] === 'string') {
-              return (a[field] > b[field]) * this.selectedFilter.direction
+            const aValue = +a[field]
+            const bValue = +b[field]
+
+            if (!aValue && !aValue) {
+              return (a[field]).localeCompare(b[field]) * this.selectedFilter.direction
             }
-            return (a[field] - b[field]) * this.selectedFilter.direction
+
+            return (aValue - bValue) * this.selectedFilter.direction
           })
         } else {
           if (this.selectedFilter.type === 'date') {
