@@ -5,15 +5,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
 import PeopleList from '@/components/people-list'
+import { mapActions } from 'vuex'
 export default {
   name: 'App',
   components: {
     PeopleList
-  },
-  computed: {
-    ...mapGetters('people', ['getIsDataLoading'])
   },
   mounted () {
     this.getPeople()

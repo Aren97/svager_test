@@ -25,6 +25,9 @@ export default {
         return this.$moment.utc(value).format('DD.MM.YYYY HH:mm:ss')
       }
 
+      if (value === 'unknown') {
+        return '-'
+      }
       return value
     }
   }

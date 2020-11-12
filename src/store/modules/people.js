@@ -7,16 +7,22 @@ export default {
     people: [],
     count: 0,
     page: 1,
+    noPeople: false,
     next: '',
     previous: '',
     isDataLoading: false
   },
   mutations: {
-    setData (state, { results: people , count, next, previous }) {
-      state.people = people
-      state.count = count
-      state.next = next
-      state.previous = previous
+    setData (state, { results: people , count, next, previous, detail }) {
+      if (detail) {
+        state.noPeople = true
+      } else {
+        state.noPeople = false
+        state.people = people
+        state.count = count
+        state.next = next
+        state.previous = previous
+      }
     },
     setIsDataLoading (state, payload) {
       state.isDataLoading = payload
@@ -39,8 +45,6 @@ export default {
         const response = await fetch(fetchUrl)
         const peopleData = await response.json()
 
-        console.log('peopleData', peopleData)
-
         commit('setData', peopleData)
       } catch (e) {
         console.error('getPeople error', e)
@@ -49,7 +53,6 @@ export default {
       }
     },
     toPage ({ commit, dispatch }, { to }) {
-      console.log('to', to)
       const page = to.split('=') && to.split('=')[1]
 
       if (page) {
@@ -62,6 +65,7 @@ export default {
     getPeople: state => state.people,
     getIsDataLoading: state => state.isDataLoading,
     next: state => state.next,
+    noPeople: state => state.noPeople,
     previous: state => state.previous
   }
 }

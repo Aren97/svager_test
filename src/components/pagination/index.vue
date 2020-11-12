@@ -1,7 +1,5 @@
 <template>
   <div class="pagination">
-    prev - {{previous}}
-    next - {{next}}
     <button class="pagination-prev" :disabled="!previous" @click="toPage(previous)">
       Предыдущая
     </button>
@@ -21,7 +19,6 @@ export default {
   methods: {
     ...mapActions('people', { changePage: 'toPage' }),
     toPage (to) {
-      console.log('tototo', to)
       this.changePage({ to })
     }
   }

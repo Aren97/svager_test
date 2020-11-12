@@ -54,7 +54,7 @@
       :table-columns="tableColumns"
       :people="filteredPeople"
     />
-    <Pagination />
+    <Pagination v-if="!noPeople"/>
   </div>
 </template>
 
@@ -76,17 +76,17 @@ export default {
         {
           title: 'по имени',
           value: 'name',
-          sort: 'base'
+          sort: 'string'
         },
         {
           title: 'по росту',
           value: 'height',
-          sort: 'base'
+          sort: 'number'
         },
         {
           title: 'по весу',
           value: 'mass',
-          sort: 'base'
+          sort: 'number'
         },
         {
           title: 'по дате',
@@ -98,7 +98,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('people', { people: 'getPeople' }),
+    ...mapGetters('people', { people: 'getPeople', noPeople: 'noPeople' }),
     filteredPeople () {
       let list = this.people
 

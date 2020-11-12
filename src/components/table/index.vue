@@ -15,7 +15,9 @@
         >{{ column.title }}</div>
       </div>
     </div>
-    <div class="table-content">
+    <div v-if="noPeople">Нет данных с выбранными фильтрами</div>
+    <div v-else-if="getIsDataLoading">Загрузка...</div>
+    <div v-else class="table-content">
       <div
         v-for="(person, key) in filteredPeople"
         :key="key"
@@ -35,6 +37,7 @@
 
 <script>
 import RowData from './row-data'
+import { mapGetters } from 'vuex'
 export default {
   name: 'table',
   components: {
@@ -59,6 +62,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('people', ['getIsDataLoading', 'noPeople']),
     directionClass () {
       return this.selectedFilter.direction < 0 ? 'desc' : 'asc'
     },
@@ -66,26 +70,27 @@ export default {
       const list = [...this.people]
       const field = this.selectedFilter && this.selectedFilter.field
       if (field) {
-        if (this.selectedFilter.type === 'base') {
-          list.sort((a, b) => {
-            const aValue = +a[field]
-            const bValue = +b[field]
-
-            if (!aValue && !aValue) {
+        switch (this.selectedFilter.type) {
+          case 'string':
+            list.sort((a, b) => {
               return (a[field]).localeCompare(b[field]) * this.selectedFilter.direction
-            }
+            })
+            break;
+          case 'number':
+            list.sort((a, b) => {
+              const aValue = +a[field] || 0
+              const bValue = +b[field] || 0
 
-            return (aValue - bValue) * this.selectedFilter.direction
-          })
-        } else {
-          if (this.selectedFilter.type === 'date') {
+              return (aValue - bValue) * this.selectedFilter.direction
+            })
+            break;
+          case 'date':
             list.sort((a, b) => {
               return (new Date(a[field]) - new Date(b[field])) * this.selectedFilter.direction
             })
-          }
+            break;
         }
       }
-      console.log('list', list)
 
       return list
     }
