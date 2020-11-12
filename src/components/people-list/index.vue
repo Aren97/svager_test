@@ -30,6 +30,19 @@
           <label for="na">N/A</label>
         </div>
       </div>
+      <div class="people-list__filter-search">
+        <div class="people-list__filter-search__label">Поиск по имени</div>
+        <input
+          v-model="searchNameValue"
+          type="text"
+          placeholder="Имя"
+          class="people-list__filter-search__input"
+        >
+        <button
+          class="people-list__filter-search__button"
+          @click="submitSearch"
+        >Поиск</button>
+      </div>
     </div>
     <Table
       :table-columns="tableColumns"
@@ -40,7 +53,7 @@
 
 <script>
 import Table from '@/components/table'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'PeopleList',
@@ -49,6 +62,7 @@ export default {
   },
   data () {
     return {
+      searchNameValue: '',
       tableColumns: [
         {
           title: 'по имени',
@@ -61,6 +75,11 @@ export default {
           sort: 'base'
         },
         {
+          title: 'по весу',
+          value: 'mass',
+          sort: 'base'
+        },
+        {
           title: 'по дате',
           value: 'created',
           sort: 'date'
@@ -70,9 +89,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('people', ['getPeople']),
+    ...mapGetters('people', { people: 'getPeople' }),
     filteredPeople () {
-      let list = this.getPeople
+      let list = this.people
 
       if (this.gender) {
         list = list.filter((item) => {
@@ -81,6 +100,12 @@ export default {
       }
 
       return list
+    }
+  },
+  methods: {
+    ...mapActions('people', ['getPeople']),
+    submitSearch () {
+      this.getPeople(this.searchNameValue)
     }
   }
 }

@@ -22,10 +22,11 @@ export default {
     }
   },
   actions: {
-    async getPeople ({ commit }) {
+    async getPeople ({ commit }, payload) {
       try {
         commit('setIsDataLoading', true)
-        const response = await fetch('https://swapi.dev/api/people')
+        const fetchUrl = `https://swapi.dev/api/people${payload ? '/?search=' + payload : ''}`
+        const response = await fetch(fetchUrl)
         const peopleData = await response.json()
 
         console.log('peopleData', peopleData)

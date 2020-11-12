@@ -1,6 +1,5 @@
 <template>
   <div class="table">
-    {{selectedFilter}}
     <div class="table-header">
       <div
         v-for="(column, key) in tableColumns"
