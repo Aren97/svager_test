@@ -48,11 +48,14 @@ export default {
         commit('setIsDataLoading', false)
       }
     },
-    toPage ({ commit }, { to }) {
+    toPage ({ commit, dispatch }, { to }) {
       console.log('to', to)
       const page = to.split('=') && to.split('=')[1]
 
-      commit('setCurrentPage', page)
+      if (page) {
+        commit('setCurrentPage', +page)
+        dispatch('getPeople')
+      }
     }
   },
   getters: {

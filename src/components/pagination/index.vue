@@ -19,9 +19,10 @@ export default {
     ...mapGetters('people', ['previous', 'next'])
   },
   methods: {
-    ...mapActions('people', ['toPage']),
+    ...mapActions('people', { changePage: 'toPage' }),
     toPage (to) {
-      this.toPage({ to })
+      console.log('tototo', to)
+      this.changePage({ to })
     }
   }
 }
