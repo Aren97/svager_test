@@ -1,28 +1,25 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <people-list />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import { mapActions, mapGetters } from 'vuex'
+import PeopleList from '@/components/people-list'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    PeopleList
+  },
+  computed: {
+    ...mapGetters('people', ['getIsDataLoading'])
+  },
+  mounted() {
+    this.getPeople()
+  },
+  methods: {
+    ...mapActions('people', ['getPeople'])
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
