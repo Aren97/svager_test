@@ -1,5 +1,3 @@
-// import swapi from 'swapi-node'
-
 export default {
   name: 'people',
   namespaced: true,
